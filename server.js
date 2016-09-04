@@ -12,7 +12,7 @@ app.use(cors());
 
 // use morgan to log requests to the console
 app.use(morgan('dev'));
-
+app.use('/', express.static(__dirname + '/public'));
 
 var CONFIG = require('./config');
 var Admin = require('./models/admin');

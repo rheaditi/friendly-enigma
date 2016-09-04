@@ -1,0 +1,22 @@
+{
+  "name": "votr",
+  "description": "Votr - A Voting App",
+  "main": "server.js",
+  "authors": [
+    "Abinav Seelan <abinav.n.seelan@gmail.com>",
+    "Aditi Mohanty <aditi.anomita@gmail.com>",
+    "Sandesh Gade <sandeshgade@gmail.com>"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/rheaditi/friendly-enigma",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "1.5.8"
+  }
+}
