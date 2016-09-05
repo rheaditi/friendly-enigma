@@ -16,6 +16,9 @@ app.use('/', express.static(__dirname + '/public'));
 
 var CONFIG = require('./config');
 var Admin = require('./models/admin');
+var Nominee = require('./models/nominee');
+var User = require('./models/user');
+var Mode = require('./models/mode');
 var port = 1337;
 
 var url = CONFIG.mongodb_url + 'votr';
@@ -26,6 +29,116 @@ mongoose.connect(url);
 
 app.listen(port, function() {
 	console.log('Server running on port ' + port);
+})
+
+
+app.post('/nominate', function(request, response) {
+	var nominee = {};
+	nominee.usn = request.body.usn;
+	nominee.name = request.body.name;
+
+	var token = request.body.token;
+	jwt.verify(token, CONFIG.secret, function(err, decoded) {
+		if (err) {
+			response.status(400).send({success:false, message: "Not Logged In"});
+		}
+		else {
+			Nominee.findOne({usn: nominee.usn}, function(err, foundNominee){
+				if (err) {
+					response.status(400).json({success: false, message: "Mongo Error"});
+				}
+				else if (foundNominee) {
+					foundNominee.count = foundNominee.count + 1;
+					foundNominee.save(function(err, updatedNominee) {
+						if (err) {
+							response.status(400).json({success:false,message:"Mongo Error"});
+						}
+						else {
+							response.status(200).json({success: true, messsage: "Vote Updated"});
+						}
+					})
+				}
+				else {
+					var newNominee = new Nominee({
+						usn: nominee.usn,
+						name: nominee.name,
+						count: 1
+					});
+
+					newNominee.save(function(err, newNominee) {
+						if (err) {
+							response.status(400).json({success: false, message: "Mongo Error"});
+						} 
+						else {
+							response.status(200).json({success: true, message: "Added New Nominee"});
+						}
+					})
+				}
+			})	
+		}
+	})
+});
+
+app.get('/candidates', function(request, response) {
+	var token = request.query.token;
+
+	jwt.verify(token, CONFIG.secret, function(err, decoded) {
+		if (err) {
+			response.status(400).json({success: false, message: 'Not Logged In'});
+		}
+		else {
+			Mode.findOne({}, function(err, mode) {
+				if (err) {
+					response.status(400).json({success: false, message: "Mongo Error"});
+				}
+				else if (mode.mode === 'voting') {
+					User.find({type: 'candidate'}, function(err, candidates) {
+						if (err) {
+							response.status(400).json({success: false, message: "Mongo Error"});
+						}
+						else {
+							response.status(200).json({success: true, candidates: candidates});
+						}
+					})
+				}
+				else {
+					response.status(400).json({success: false, message: "Not Voting Time!"});
+				}
+			})
+		}
+	})
+})
+
+app.post('/change_mode', function(request, response) {
+	var token = request.body.token;
+	var newMode = request.body.mode;
+
+	jwt.verify(token, CONFIG.secret, function(err, decoded) {
+		if (err) {
+			response.status(400).json({success: false, message: 'Not Logged In'});
+		}
+		else if (decoded.admin === true) {
+			Mode.findOne({}, function(err, mode) {
+				if (err) {
+					response.status(400).json({success: false, message: "Mongo Error"});
+				}
+				else {
+					mode.mode = newMode;
+					mode.save(function(err, updatedMode) {
+						if (err) {
+							response.status(400).json({success: false, message: "Mongo Error"});
+						}
+						else {
+							response.status(200).json({success: true, message: "Mode Changed"});
+						}
+					})
+				}
+			})
+		}
+		else {
+			response.status(400).json({success:false, message: "Not Authorized"});
+		}
+	})
 })
 
 
@@ -40,7 +153,7 @@ app.post('/auth_admin', function(request, response) {
 		} 
 		else if (admin.length){
 			if (admin[0].password === user.password) {
-				var token = jwt.sign({username: user.username, expiresIn: "1h"}, CONFIG.secret);
+				var token = jwt.sign({username: user.username, expiresIn: "1h", admin: true}, CONFIG.secret);
 				response.status(200).json({success:true, token:token, username: user.username});
 			} else {
 				response.status(400).json({success:false, message: "Password Mismatch"});
