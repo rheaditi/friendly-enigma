@@ -1,26 +1,34 @@
-app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider){
+app.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', 'jwtOptionsProvider', function($stateProvider, $urlRouterProvider){
 
 	$urlRouterProvider
 	.when('/','/home')
 	.otherwise('/404');
 
 	$stateProvider
-		.state('/signin', {
-			url: '/signin',
-			templateUrl: 'app/components/signin/signinView.html',
-			controller: 'SigninCtrl'
+		.state('/login', {
+			url: '/login',
+			templateUrl: 'app/components/login/loginView.html',
+			controller: 'LoginCtrl'
 		})
-		.state('/admin-signin', {
-			url: '/admin-signin', 
-			templateUrl: 'app/components/admin-signin/adminSigninView.html',
-			controller: 'AdminSigninCtrl'
+		.state('/adminlogin', {
+			url: '/admin/login', 
+			templateUrl: 'app/components/admin-login/adminLoginView.html',
+			controller: 'AdminLoginCtrl'
 		})
-		.state('/control-panel', {
-			url: '/admin/control-panel',
-			templateUrl: 'app/components/control-panel/controlPanelView.html',
-			controller: 'ControlPanelCtrl',
+		.state('/control-center', {
+			url: '/admin/control-center',
+			templateUrl: 'app/components/control-center/controlCenterView.html',
+			controller: 'ControlCenterCtrl',
 			data: {
 				requiresAdmin: true
 			}
 		})
+		.state('/404', {
+			url: '/404',
+			templateUrl: 'app/shared/404/404.html',
+			controller: '404Ctrl'
+		});
+
 }]);
+
+

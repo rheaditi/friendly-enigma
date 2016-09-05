@@ -40,13 +40,21 @@
   <script src="../bower_components/angular/angular.js"></script>
   <script src="../bower_components/jquery/dist/jquery.js"></script>
   <script src="../bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+  <script src="../bower_components/a0-angular-storage/dist/angular-storage.js"></script>
+  <script src="../bower_components/angular-jwt/dist/angular-jwt.js"></script>
   <!-- endbower -->
 
   <script type="text/javascript" src="app/app.module.js"></script>
   <script type="text/javascript" src="app/app.routes.js"></script>
-  <script type="text/javascript" src="app/components/admin-signin/adminSigninController.js"></script>
-  <script type="text/javascript" src="app/components/control-panel/controlPanelController.js"></script>
-  <script type="text/javascript" src="app/components/signin/signinController.js"></script>
+  <script type="text/javascript" src="app/shared/404/404Controller.js"></script>
+
+  <script type="text/javascript" src="app/components/admin-login/adminService.js"></script>
+  <script type="text/javascript" src="app/shared/sessionService.js"></script>
+
+
+  <script type="text/javascript" src="app/components/admin-login/adminLoginController.js"></script>
+  <script type="text/javascript" src="app/components/control-center/controlCenterController.js"></script>
+  <script type="text/javascript" src="app/components/login/loginController.js"></script>
   <script src="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.js"></script>
 
 </body>

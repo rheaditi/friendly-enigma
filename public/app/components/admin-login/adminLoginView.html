@@ -1,0 +1,10 @@
+<pre>
+	{{ jwt | json }}
+</pre>
+
+<form ng-submit="adminAuthenticate(form.username, form.password)">
+	<input type="text" name="username" placeholder="username" value="user1" ng-model="form.username"/>
+	<input type="password" name="password" placeholder="password" value="pass" ng-model="form.password"/>
+	<input type="submit" name="submit" value="submit" />
+	<input type="reset" name="reset" value="clear" />
+</form>

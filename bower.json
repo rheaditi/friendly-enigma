@@ -20,6 +20,8 @@
     "angular": "1.5.8",
     "jquery": "^3.1.0",
     "angular-ui-router": "^0.3.1",
-    "normalize-css": "^4.2.0"
+    "normalize-css": "^4.2.0",
+    "a0-angular-storage": "^0.0.15",
+    "angular-jwt": "^0.1.3"
   }
 }
