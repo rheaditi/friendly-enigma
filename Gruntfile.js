@@ -1,4 +1,5 @@
 module.exports = function(grunt) {
+  require('load-grunt-tasks')(grunt);
 
   grunt.initConfig({
     
@@ -8,6 +9,16 @@ module.exports = function(grunt) {
       }
     },
 
+    wiredep: {
+      dev: {
+        src: ['public/index.html']
+      }
+    },
+
+    //concurrent: {
+    //  dev: ['nodemon:dev', 'wiredep']
+    //},
+
     // JS TASKS ================================================================
     // check all js files for errors
     jshint: {
@@ -15,8 +26,6 @@ module.exports = function(grunt) {
     }
   });
 
-  grunt.loadNpmTasks('grunt-nodemon');
-
-  grunt.registerTask('default', ['nodemon']);
+  grunt.registerTask('default', ['wiredep', 'nodemon']);
 
 };
