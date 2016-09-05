@@ -17,20 +17,44 @@ app.use('/', express.static(__dirname + '/public'));
 var CONFIG = require('./config');
 var Admin = require('./models/admin');
 var Nominee = require('./models/nominee');
+var Candidate = require('./models/candidate');
 var User = require('./models/user');
 var Mode = require('./models/mode');
-var port = 1337;
+
+
 
 var url = CONFIG.mongodb_url + 'votr';
 console.log(url);
 
 mongoose.connect(url);
 
-
+var port = 1337;
 app.listen(port, function() {
 	console.log('Server running on port ' + port);
-})
+});
 
+app.get('/nominee_list', function(request, response) {
+	var token = request.query.token;
+
+	jwt.verify(token, CONFIG.secret, function(err, decoded) {
+		if (err) {
+			response.status(400).send({success:false, message: "Not Logged In"});
+		}
+		else if (decoded.admin === true){
+			Nominee.find({}, function(err, nominees) {
+				if (err) {
+					response.status(400).json({success: false, message: "Mongo Error"});
+				}
+				else {
+					response.status(200).json({success: true, nominees: nominees});
+				}
+			})
+		}
+		else {
+			response.status(400).json({success: false, message: "Not Authorized"});
+		}
+	})
+})
 
 app.post('/nominate', function(request, response) {
 	var nominee = {};
@@ -92,7 +116,7 @@ app.get('/candidates', function(request, response) {
 					response.status(400).json({success: false, message: "Mongo Error"});
 				}
 				else if (mode.mode === 'voting') {
-					User.find({type: 'candidate'}, function(err, candidates) {
+					Candidate.find({}, {fb_id:1, name:1, introduction:1}, function(err, candidates) {
 						if (err) {
 							response.status(400).json({success: false, message: "Mongo Error"});
 						}
@@ -103,6 +127,30 @@ app.get('/candidates', function(request, response) {
 				}
 				else {
 					response.status(400).json({success: false, message: "Not Voting Time!"});
+				}
+			})
+		}
+	})
+})
+
+app.post('/vote', function(request, response) {
+	var token = request.body.token;
+	var c_id = request.body.c_id;
+	var vc_id = request.body.vc_id;
+	var t_id = request.body.t_id;
+	var s_id = request.body.s_id;
+
+	jwt.verify(token, CONFIG.secret, function(err, decoded) {
+		if (err) {
+			response.status(400).json({success: false, message: 'Not Logged In'});	
+		}
+		else {
+			Mode.findOne({}, function(err, currentMode){
+				if (currentMode === 'voting') {
+					
+				}
+				else {
+					response.status(400).json({success: false, message: 'Not Voting Time!'});	
 				}
 			})
 		}
