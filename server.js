@@ -14,6 +14,8 @@ app.use(cors());
 app.use(morgan('dev'));
 app.use('/', express.static(__dirname + '/public'));
 
+app.use('/bower_components', express.static(__dirname + '/bower_components'));
+
 var CONFIG = require('./config');
 var Admin = require('./models/admin');
 var Nominee = require('./models/nominee');
