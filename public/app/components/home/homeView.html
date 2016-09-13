@@ -1,0 +1,35 @@
+<div class="ui grid" style="margin-top:10%;">
+
+	<div class="four wide column"></div>
+
+	<div class="eight wide column">
+		
+		<div ng-if='mode === "voting"'>
+			<div class="ui blue message">
+				<div class="header">
+					PESITSouth ACM Elections
+				</div>
+				<p>Nominate a 4th year to stand for elections! <br/><br/>
+					Note: Please be <strong>extremely</strong> certain of his/her USN :)</p>
+			</div>
+			<form class="ui form segment">
+				<div class="field">
+					<label>Usn</label>
+					<input type="text" name="first-name" ng-model='usn' placeholder="USN">
+			  	</div>
+			  	<div class="field">
+					<label>Name</label>
+					<input type="text" name="last-name" ng-model='name' placeholder="Name">
+				</div>
+				<button class="ui button" ng-click='nominate(usn, name)'>Nominate</button>
+			</form>
+		</div>
+
+		<div ng-if='mode === "limbo"'>
+			<h1>Voting hasn't begun yet!</h1>
+			<p>Do check back in awhile!</p>
+		</div>
+
+	</div>
+</div>
+

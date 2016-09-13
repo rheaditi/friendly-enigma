@@ -1,21 +1,22 @@
-app.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', 'jwtOptionsProvider', function($stateProvider, $urlRouterProvider){
+app.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', 'jwtOptionsProvider', 
+	function($stateProvider, $urlRouterProvider){
 
 	$urlRouterProvider
 	.when('/','/home')
 	.otherwise('/404');
 
 	$stateProvider
-		.state('/login', {
+		.state('login', {
 			url: '/login',
 			templateUrl: 'app/components/login/loginView.html',
 			controller: 'LoginCtrl'
 		})
-		.state('/adminlogin', {
+		.state('admin-login', {
 			url: '/admin/login', 
 			templateUrl: 'app/components/admin-login/adminLoginView.html',
 			controller: 'AdminLoginCtrl'
 		})
-		.state('/control-center', {
+		.state('control-center', {
 			url: '/admin/control-center',
 			templateUrl: 'app/components/control-center/controlCenterView.html',
 			controller: 'ControlCenterCtrl',
@@ -23,7 +24,15 @@ app.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', 'jwtOptions
 				requiresAdmin: true
 			}
 		})
-		.state('/404', {
+		.state('home', {
+			url: '/home',
+			templateUrl: 'app/components/home/homeView.html',
+			controller: 'HomeCtrl',
+			data: {
+				requiresLogin: true
+			}
+		})
+		.state('404', {
 			url: '/404',
 			templateUrl: 'app/shared/404/404.html',
 			controller: '404Ctrl'

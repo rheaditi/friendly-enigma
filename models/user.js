@@ -2,7 +2,8 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var UserSchema = new Schema({
-	fb_id: 'string',
+	username: 'string',
+	password: 'string',
 	type: 'string'
 })
 
