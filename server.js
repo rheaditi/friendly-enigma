@@ -42,7 +42,7 @@ app.get('/mode', function(request, response) {
 			response.status(400).json({success: false, message: "Mongo Error", error: err})
 		}
 		else {
-			response.status(200).json({success: false, mode:mode.mode});
+			response.status(200).json({success: true, mode:mode.mode});
 		}
 	})
 })
@@ -262,16 +262,9 @@ app.post('/user', function(request, response) {
 		}
 		else if (users) {
 			if (users.password === user.password) {
-				Mode.findOne({}, function(err, mode) {
-					if (err) {
-						response.status(400).json({success: false, message: "Mongo Error", error: err})
-					}
-					else {
-						var token = jwt.sign({username: user.username, expiresIn: "1h", admin: false, mode:mode.mode},
-							CONFIG.secret);
-						response.status(200).json({success:true, token:token, username: user.username});
-					}
-				})
+				var token = jwt.sign({username: user.username, expiresIn: "1h", admin: false, mode:mode.mode},
+					CONFIG.secret);
+				response.status(200).json({success:true, token:token, username: user.username});
 			} else {
 				response.status(400).json({success:false, message: "Password Mismatch"});
 			}
@@ -293,16 +286,9 @@ app.post('/auth_admin', function(request, response) {
 			response.status(400).json({success: false, message: "Mongo Error", error: err});
 		} 
 		else if (admin){
-			Mode.findOne({}, function(err, mode) {
-				if (err) {
-					response.status(400).json({success: false, message: "Mongo Error", error: err})
-				}
-				else {
-					var token = jwt.sign({username: user.username, expiresIn: "1h", admin: true, mode:mode.mode},
-						CONFIG.secret);
-					response.status(200).json({success:true, token:token, username: user.username});
-				}
-			})
+			var token = jwt.sign({username: user.username, expiresIn: "1h", admin: true},
+				CONFIG.secret);
+			response.status(200).json({success:true, token:token, username: user.username});
 		}
 		else {
 			response.status(400).json({success:false, message: "No User Found"});

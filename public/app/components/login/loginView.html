@@ -1,20 +1,25 @@
-<div class="ui grid" style="margin-top:10%;">
+<div class="ui grid">
 	<div class="four wide column"></div>
 	<div class="eight wide column">
-		<form class="ui form attached fluid segment">
+		<form class="ui form segment">
 			<div class="field">
 				<label>Username</label>
 				<input type="text" name="first-name" ng-model='user.username' placeholder="Username">
 		  	</div>
 		  	<div class="field">
 				<label>Password</label>
-				<input type="text" name="last-name" ng-model='user.password' placeholder="Password">
+				<input type="password" name="last-name" ng-model='user.password' placeholder="Password">
 			</div>
-			<button class="ui button" ng-click='signInUser(user)'>Submit</button>
+			<button class="ui button" ng-click='signInUser(user)'>Log in</button>
 		</form>
-		<div class="ui bottom attached warning message">
-			<i class="icon help"></i>
-			Are you an administrator? <a href="#/admin/login">Login here</a> instead.
+		<div class="ui horizontal divider">
+			Or
 		</div>
+		<a href="#/admin/login">
+			<div class="ui teal labeled icon button center">
+				Sign in as Admin
+				<i class="spy icon"></i>
+			</div>
+		</a>
 	</div>
 </div>

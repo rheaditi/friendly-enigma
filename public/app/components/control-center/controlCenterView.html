@@ -1,20 +1,87 @@
-<div class="ui grid" style="margin-top:10%;">
-	<div class="four wide column">
-		
-
-	</div>
-	<div class="eight wide column">
-		<div class="field">
-			<label>Change Mode</label>
-			<select class="ui fluid dropdown" ng-model="setMode">
-				<option ng-bind="mode"></option>
-				<option>Nominations</option>
-				<option>Limbo</option>
-				<option>Voting</option>
-				<option>Results</option>
-			</select>
+<div class="ui grid" style="margin-top:10%;" ng-init="populatePage()">
+	<div class="row">
+		<div class="two wide column">
+		</div>
+		<div class="six wide column">
+			<h1 class="ui header">Change Mode</h1>
 		</div>
 	</div>
+	<div class="row">
+		<div class="two wide column">
+		</div>
+		<div class="six wide column">
+			<div class="field">
+				<select class="ui fluid dropdown" ng-model="setMode">
+					<option value="nominations">Nominations</option>
+					<option value="limbo">Limbo</option>
+					<option value="voting">Voting</option>
+					<option value="results">Results</option>
+				</select>
+			</div>
+		</div>
+		<div class="four wide column">
+			<div class="ui green labeled icon button center" ng-click="switchMode(setMode);" ng-if="showButton === true;">
+				Switch Mode
+				<i class="exchange icon"></i>
+			</div>
+			<button class="ui loading button yellow" ng-if="showLoading === true">Loading</button>
 
-	{{setMode}}
+			<div class="ui green labeled icon button center" ng-click="switchMode(setMode);" ng-if="showDone === true">
+				Done
+				<i class="check icon"></i>
+			</div>
+			
+		</div>
+	</div>
+	<div class="row">
+		<div class="two wide column">
+		</div>
+		<div class="twelve wide column">
+			<div class="ui divider"></div>
+			<h1 class="ui header">Nomination Results</h1>
+			<table class="ui celled table">
+				<thead>
+					<tr>
+						<th>USN</th>
+						<th>Name</th>
+						<th>Nomination Count</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>1PE12CS005</td>
+						<td>Abinav Seelan</td>
+						<td>4</td>
+					</tr>
+					<tr>	
+						<td>1PE12CS006</td>
+						<td>Aditi Mohanty</td>
+						<td>10</td>
+					</tr>
+					<tr>
+						<td>1PE12CS022</td>
+						<td>Aravind Sundaresan</td>
+						<td>2</td>
+					</tr>
+					<tr>
+						<td>1PE12CS048</td>
+						<td>G Arun Kumar</td>
+						<td>2</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<div class="row">
+		<div class="two wide column">
+		</div>
+		<div class="twelve wide column">
+			<div class="ui divider"></div>
+			<h1 class="ui header">Final Results</h1>
+			<div class="ui red labeled icon button center">
+				Crunch Final Results
+				<i class="rocket icon"></i>
+			</div>
+		</div>
+	</div>
 </div>

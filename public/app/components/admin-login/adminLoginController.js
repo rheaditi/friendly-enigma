@@ -1,5 +1,5 @@
-app.controller('AdminLoginCtrl', ['$scope', '$http', '$state', 'adminService', 'sessionService',
-	function($scope, $http, $state, adminService, sessionService){
+app.controller('AdminLoginCtrl', ['$scope', '$http', '$location', 'adminService', 'sessionService',
+	function($scope, $http, $location, adminService, sessionService){
 	
 
 	$scope.adminAuthenticate = function(username, password){
@@ -8,7 +8,7 @@ app.controller('AdminLoginCtrl', ['$scope', '$http', '$state', 'adminService', '
 		 	$scope.jwt = response.data;
 		 	if(response.data.token){
 		 		sessionService.setJwt(response.data.token);
-		 		$state.go('control-center')
+		 		$location.path('/admin/control-center')
 		 	}
 		 	else {
 		 		console.error('No token received.')

@@ -1,10 +1,26 @@
-<pre>
-	{{ jwt | json }}
-</pre>
-
-<form ng-submit="adminAuthenticate(form.username, form.password)">
-	<input type="text" name="username" placeholder="username" value="user1" ng-model="form.username"/>
-	<input type="password" name="password" placeholder="password" value="pass" ng-model="form.password"/>
-	<input type="submit" name="submit" value="submit" />
-	<input type="reset" name="reset" value="clear" />
-</form>
+<div class="ui grid">
+	<div class="four wide column"></div>
+	<div class="eight wide column">
+		<form class="ui form segment">
+			<div class="field">
+				<h1 class="ui center aligned header">Admin Login</h1>
+			</div>
+			<div class="field">
+				<label>Username</label>
+				<input type="text" name="first-name" ng-model='username' placeholder="Username">
+		  	</div>
+		  	<div class="field">
+				<label>Password</label>
+				<input type="password" name="last-name" ng-model='password' placeholder="Password">
+			</div>
+			<button class="ui button" ng-click='adminAuthenticate(username, password)'>Log in as Admin</button>
+			<a href="#/login">
+				<div class="ui red labeled icon button center">
+					I'm not an Admin!
+					<i class="angle left icon"></i>
+				</div>
+			</a>
+		</form>
+		
+	</div>
+</div>

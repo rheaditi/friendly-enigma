@@ -14,8 +14,14 @@ app.service('sessionService', ['store', 'jwtHelper', function(store, jwtHelper){
 
 	this.getTranslatedJwt = function(){
 		var rawJwt = store.get(JWT_STORE_KEY);
-		var decoded = jwtHelper.decodeToken(rawJwt);
-		return decoded;
+		if (rawJwt){
+			var decoded = jwtHelper.decodeToken(rawJwt);
+			return decoded;
+		}
+		else {
+			return "No Jwt";
+		}
+		
 	};
 
 	this.isExpired = function(){
